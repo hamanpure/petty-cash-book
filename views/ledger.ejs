@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Ledger</title>
+  <script>
+    function handleDropdownChange() {
+    const dropdown1 = document.getElementById("entryType");
+    const dropdown2 = document.getElementById("expenseHead");
+    const selectedOption = dropdown1.value;
+    
+    // Clear the previous options in dropdown2
+    dropdown2.innerHTML = "";
+
+    if (selectedOption === "income") {
+      const optionAValues = ["Salary","Rent","Investment Returns","Incentives","Gift Cards","Other",];
+
+      // Create and append new options to dropdown2
+      optionAValues.forEach((value) => {
+        const option = document.createElement("option");
+        option.text = value;
+        dropdown2.add(option);
+      });
+    } else if (selectedOption === "expense") {
+      // Define options for dropdown2 when Option B is selected
+      const optionBValues = ["EMI", "Interest", "Bills", "Subsciptions","Travel","Fuel","Other"];
+
+      // Create and append new options to dropdown2
+      optionBValues.forEach((value) => {
+        const option = document.createElement("option");
+        option.text = value;
+        dropdown2.add(option);
+      });
+    }
+  }
+  </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <style>
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+    body {
+        background-position: 0;
+    }
+
+    h1 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 900;
+        text-align: center;
+        padding-top: 1em;
+    }
+
+    .main {
+        display: flex;
+        align-content: center;
+        margin-top: 5em;
+    }
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 10em;
+        font-family: 'Inter', sans-serif;
+        border-radius: 2em;
+    }
+
+    label {
+        padding: 0.5em 0;
+        color: #6c63ff;
+    }
+
+    select, input, textarea {
+        border: 0.2em #6b63ff82;
+        height: 2em;
+        font-size: 1em;
+        color:  black;
+        padding: 0.25em;
+        border-radius: 0.30em;
+        background-color: rgba(128, 128, 128, 0.167);
+        font-family: 'Inter', sans-serif;
+
+    }
+
+    button {
+        background-color: #63ff88;
+        height: 2em;
+        width: 4em;
+        border: none;
+        border-radius: 0.25em;
+        margin-top: 0.25em;
+        align-content: center;
+    }
+
+    button:hover {
+        background-color: #63ff87b8;
+    }
+
+    .submit {
+        background-color: #63ff88;
+    }
+
+    .submit:hover {
+        background-color: #63ff87b8;
+    }
+
+    .content1 {
+        margin-left: 5em;
+    }
+    
+    .content2 {
+        height: 10em;
+        width: 10em;
+    }
+
+    .header {
+      display: flex;
+      flex-direction: row;
+      justify-items: center;
+    }
+
+    .header a{
+      padding-top: 3.25em;
+      margin-right: 40em;
+      margin-left: 2em;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="/"><i class="fa-solid fa-arrow-left fa-2x"></i></a>
+    <h1>Ledger Entry</h1>
+  </div>
+  <div class="main">
+    <div class="content1">
+        <form class="form" action="/my-ledger" method="post">
+            <label for="entryType">Choose Entry Type:</label>
+            <select id="entryType" name="entryType" onchange="handleDropdownChange()">
+              <option value="income">Choose Head</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+            <br><br>
+        
+            <label for="expenseHead">Transaction Head:</label>
+            <select id="expenseHead" name="expenseHead" >
+            </select>
+            <br><br>
+        
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount">
+            <br><br>
+        
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" cols="50"></textarea>
+            <br><br>
+        
+            <input type="submit" value="Submit" class="submit">
+          </form>
+    </div>
+    <div class="content2">
+        <img src="/images/ledgerill.png" alt="">
+    </div>
+  </div>
+</body>
+</html>
