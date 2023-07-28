@@ -2,37 +2,7 @@
 <html>
 <head>
   <title>My Ledger</title>
-  <script>
-    function handleDropdownChange() {
-    const dropdown1 = document.getElementById("entryType");
-    const dropdown2 = document.getElementById("expenseHead");
-    const selectedOption = dropdown1.value;
-    
-    // Clear the previous options in dropdown2
-    dropdown2.innerHTML = "";
-
-    if (selectedOption === "income") {
-      const optionAValues = ["Salary","Rent","Investment Returns","Incentives","Gift Cards","Other",];
-
-      // Create and append new options to dropdown2
-      optionAValues.forEach((value) => {
-        const option = document.createElement("option");
-        option.text = value;
-        dropdown2.add(option);
-      });
-    } else if (selectedOption === "expense") {
-      // Define options for dropdown2 when Option B is selected
-      const optionBValues = ["EMI", "Interest", "Bills", "Subsciptions","Travel","Fuel","Other"];
-
-      // Create and append new options to dropdown2
-      optionBValues.forEach((value) => {
-        const option = document.createElement("option");
-        option.text = value;
-        dropdown2.add(option);
-      });
-    }
-  }
-  </script>
+  
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,7 +31,6 @@
     .main {
         display: flex;
         align-content: center;
-        margin-top: 5em;
     }
     .form {
         display: flex;
@@ -111,14 +80,24 @@
         background-color: #63ff87b8;
     }
 
+    .content2 {
+      font-family: 'Inter', sans-serif;
+    }
+
     .content1 {
-        margin-left: 5em;
+      font-family: 'Inter', sans-serif;
     }
     
-    .content2 {
-        height: 10em;
-        width: 10em;
+    .content2 h3 {
+      text-align: center;
     }
+
+    .content1 h3 {
+      text-align: center;
+    }
+    
+    
+    
 
     .header {
       display: flex;
@@ -141,17 +120,15 @@
   </div>
   <div class="main">
     <div class="content1">
-        <form class="form" action="/my-ledger" method="post">
-            <label for="entryType">Choose Entry Type:</label>
-            <select id="entryType" name="entryType" onchange="handleDropdownChange()">
-              <option value="income">Choose Head</option>
-              <option value="income">Income</option>
-              <option value="expense">Expense</option>
-            </select>
-            <br><br>
+      
+        <form class="form" action="/my-ledger-i" method="post">
+            <h3>Income Entry</h3><br><br>
         
             <label for="expenseHead">Transaction Head:</label>
             <select id="expenseHead" name="expenseHead" >
+              <% for (const x of docSend.income) { %>
+                <option value="<%= x %>"><%= x %></option>
+              <% } %>
             </select>
             <br><br>
         
@@ -167,7 +144,29 @@
           </form>
     </div>
     <div class="content2">
-        <img src="/images/ledgerill.png" alt="">
+      
+      <form class="form" action="/my-ledger-e" method="post">
+        <h3 name="expenseHeading">Expense Entry</h3>
+        <br><br>
+    
+        <label for="expenseHead">Transaction Head:</label>
+        <select id="expenseHead" name="expenseHead" >
+          <% for (const x of docSend.expense) { %>
+            <option value="<%= x %>"><%= x %></option>
+          <% } %>
+        </select>
+        <br><br>
+    
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount">
+        <br><br>
+    
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea>
+        <br><br>
+    
+        <input type="submit" value="Submit" class="submit">
+      </form>
     </div>
   </div>
 </body>

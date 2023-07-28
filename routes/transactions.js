@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Transaction = require('../models/transactions');
 const Meta = require('../models/metadata');
+const Head = require('../models/head');
+
 const { parse } = require('dotenv');
 
 
@@ -10,9 +12,45 @@ router.get('/', (req,res) =>
     res.render('index');
 });
 
-router.get('/my-ledger', (req,res) => 
+router.get('/my-ledger', async (req,res) => 
 {
-    res.render('ledger');
+    const retrieveHead = await Head.find();
+    expenseArr = [];
+    incomeArr = [];
+    retrieveHead.forEach((dc) => 
+    {
+        if (dc.type === 'income') {
+            incomeArr.push(dc.headtitle);
+        }
+        else {
+            expenseArr.push(dc.headtitle);
+        }
+    });
+    const docSend = {
+        income: incomeArr,
+        expense: expenseArr
+    }
+    console.log(docSend)
+    res.render('ledger', { docSend } );
+
+});
+
+router.get('/create-head', (req,res) => {
+    res.render('create-head');
+})
+
+router.post('/create-head', (req,res) => 
+{
+    const doc = {
+        type: req.body.headType,
+        headtitle: req.body.headName,
+        headdesc: req.body.headDescription.trim(),
+    }
+
+    Head.create(doc)
+    .then(user => res.render('create-head'))
+    .catch(err => res.status(400).json({error:'cant add head'}));
+
 });
 
 router.get('/analytics', async (req,res) => 
@@ -83,7 +121,7 @@ router.get('/analytics', async (req,res) =>
         }
 
         else {
-            openingDay = openingDay - doc.transact_amt;
+            openingDay = openingDay + doc.transact_amt;
         }
     });
 
@@ -95,7 +133,7 @@ router.get('/analytics', async (req,res) =>
         }
 
         else {
-            openingWeek = openingWeek - doc.transact_amt;
+            openingWeek = openingWeek + doc.transact_amt;
         }
     });
 
@@ -110,7 +148,7 @@ router.get('/analytics', async (req,res) =>
         }
 
         else {
-            openingMonth = openingMonth - doc.transact_amt;
+            openingMonth = openingMonth + doc.transact_amt;
             monthExpense = monthExpense + doc.transact_amt
         }
     });
@@ -123,7 +161,7 @@ router.get('/analytics', async (req,res) =>
         }
 
         else {
-            openingYear = openingYear - doc.transact_amt;
+            openingYear = openingYear + doc.transact_amt;
         }
 
 
@@ -151,7 +189,7 @@ router.get('/analytics', async (req,res) =>
 })
 });
 
-router.post('/my-ledger', (req,res) => 
+router.post('/my-ledger-i', (req,res) => 
 {
     const date = new Date();
     const dateStringToday = date.toLocaleDateString();
@@ -161,30 +199,54 @@ router.post('/my-ledger', (req,res) =>
         timestamp: dateStringToday,
         transact_head: req.body.expenseHead,
         transact_amt: req.body.amount,
-        transact_type: req.body.entryType,
+        transact_type: "income",
         transact_desc: req.body.description,
     }
+
+    Meta.findOneAndUpdate(
+        {identity: 'test'},
+        { $inc: { balance: req.body.amount } },
+    ) 
+    .then(a => console.log('balance updated'))
+    .catch(error => res.status(400).json({error:'cant add note'}));
+
     Transaction.create(doc)
-    .then(user => res.render('ledger'))
+    .then(user => res.redirect('/my-ledger'))
     .catch(err => res.status(400).json({error:'cant add note'}));
+
     
-    if (req.body.entryType === 'income') {
-        Meta.findOneAndUpdate(
-            {identity: 'test'},
-            { $inc: { balance: req.body.amount } },
-        ) 
-        .then(a => console.log('balance updated'))
-        .catch(error => res.status(400).json({error:'cant add note'}));
+    
+    
+})
+
+router.post('/my-ledger-e', (req,res) => 
+{
+    const date = new Date();
+    const dateStringToday = date.toLocaleDateString();
+    console.log(req.body.entryType);
+    console.log(req.body.amount)
+    const doc = {
+        timestamp: dateStringToday,
+        transact_head: req.body.expenseHead,
+        transact_amt: req.body.amount,
+        transact_type: "expense",
+        transact_desc: req.body.description,
     }
 
-    else {
-        Meta.findOneAndUpdate(
-            {identity: 'test'},
-            { $inc: { balance: -req.body.amount } },
-        ) 
-        .then(a => console.log('balance updated'))
-        .catch(error => res.status(400).json({error:'cant add note'}));
-    }
+    Meta.findOneAndUpdate(
+        {identity: 'test'},
+        { $inc: { balance: -req.body.amount } },
+    ) 
+    .then(a => console.log('balance updated'))
+    .catch(error => res.status(400).json({error:'cant add note'}));
+
+    Transaction.create(doc)
+    .then(user => res.redirect('/my-ledger'))
+    .catch(err => res.status(400).json({error:'cant add note'}));
+
+    
+    
+    
 })
 
 module.exports = router;

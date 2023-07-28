@@ -47,9 +47,6 @@
             margin: 0;
         }
 
-        
-
-
         .greet {
             display: flex;
             flex-direction: column;
@@ -280,12 +277,19 @@
             justify-content: center;
             width: 90%;
             /* border: 1px solid; */
+
             border-collapse: collapse;
             margin-left: 3em;
         }
+
+        tbody {
+            width: auto;
+        }
+
+        
         tr, th, td {
             border: 1px solid;
-            padding: 1em 2.5em;
+            padding: 1em 3em;
             text-align: center;
         }
 
@@ -296,16 +300,19 @@
         }
 
         .left-table-container {
+
     float:left;
     width: 40%; 
+
     margin-bottom: 20px; 
   }
 
   .right-table-container {
-    float:right;
-    width: 40%;
+
+    width: 100%;
   }
-    .table-container {
+        .table-container {
+
     width: 96%;
     margin: 0 auto; 
     overflow: auto; 
@@ -376,6 +383,19 @@
                 <input type="radio" id="option-annually" name="options">
                 <label for="option-annually">Annually</label>
 
+                
+                    <%function filterTransactionsByType(transactions) {%>
+                      <%const incomeTransactions = transactions.filter((transaction) => {%>
+                        <%return transaction.transact_type === 'income';%>
+                      <%});%>
+                
+                      <%const expenseTransactions = transactions.filter((transaction) => {%>
+                       <% return transaction.transact_type === 'expense';%>
+                      <%});%>
+                
+                      <%return { incomeTransactions, expenseTransactions };%>
+                    <%}%>
+
                 <div class="tab-content" id="content-daily">
                     <div class="openclose">
                         <h3>Opening Balance: $<%= docy.openingBalDay%></h3>
@@ -428,6 +448,7 @@
                       <div class="openclose">
                         <h3>Closing Balance: $<%= docy.balance%></h3>
                     </div>
+
                 </div>
                 
                 <div class="tab-content" id="content-weekly">
@@ -435,6 +456,7 @@
                   <div class="openclose">
                     <h3>Opening Balance: $<%= docy.openingBalWeek%></h3>
                 </div>
+
                 <div class="table-container">
                     <div class="left-table-container">
                         <table >
@@ -480,6 +502,7 @@
                         </table>
                       </div>
                     </div>
+
 
                 <div class="openclose">
                     <h3>Closing Balance: $<%= docy.balance%></h3>
@@ -599,5 +622,9 @@
               </div>
         </div>
     </div>
+
+
+    
+
 </body>
 </html>
