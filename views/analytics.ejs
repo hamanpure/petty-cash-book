@@ -275,8 +275,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            width: auto;
-            border: 2px solid;
+            width: 90%;
+            /* border: 1px solid; */
+
             border-collapse: collapse;
             margin-left: 3em;
         }
@@ -299,14 +300,19 @@
         }
 
         .left-table-container {
-    width: 100%; 
+
+    float:left;
+    width: 40%; 
+
     margin-bottom: 20px; 
   }
 
   .right-table-container {
+
     width: 100%;
   }
         .table-container {
+
     width: 96%;
     margin: 0 auto; 
     overflow: auto; 
@@ -376,6 +382,7 @@
                 
                 <input type="radio" id="option-annually" name="options">
                 <label for="option-annually">Annually</label>
+
                 
                     <%function filterTransactionsByType(transactions) {%>
                       <%const incomeTransactions = transactions.filter((transaction) => {%>
@@ -393,56 +400,55 @@
                     <div class="openclose">
                         <h3>Opening Balance: $<%= docy.openingBalDay%></h3>
                     </div>
-                    <%const { incomeTransactions, expenseTransactions } = filterTransactionsByType(docy.dailySend);%>
                     <div class="table-container">
-                    <div class="left-table-container">
-                        <table style="width: 60%;">
-                          <tr>
-                            <th colspan="3">Transaction Type: Income</th>
-                          </tr>
-                          <tr>
-                            <!-- <th>Transc. Type</th> -->
-                            <th>Transc. Amt</th>
-                            <th>Transc. Head</th>
-                            <th>Transc. Date</th>
-                          </tr>
-                          <% for (var docx of incomeTransactions) { %>
-                            <tr>
-                              <!-- <td><%= docx.transact_type %></td> -->
-                              <td><%= docx.transact_amt %></td>
-                              <td><%= docx.transact_head %></td>
-                              <td><%= docx.timestamp %></td>
-                            </tr>
-                          <% } %>
-                        </table>
-                      </div>
-                    
-                      <div class="right-table-container">
-                        <table style="width: 60%;">
-                          <tr>
-                            <th colspan="3">Transaction Type: Expense</th>
-                          </tr>
-                          <tr>
-                            <!-- <th>Transc. Type</th> -->
-                            <th>Transc. Amt</th>
-                            <th>Transc. Head</th>
-                            <th>Transc. Date</th>
-                          </tr>
-                          <% for (var docx of expenseTransactions) { %>
-                            <tr>
-                              <!-- <td><%= docx.transact_type %></td> -->
-                              <td><%= docx.transact_amt %></td>
-                              <td><%= docx.transact_head %></td>
-                              <td><%= docx.timestamp %></td>
-                            </tr>
-                          <% } %>
-                        </table>
-                      </div>
-                    </div>
+                        <div class="left-table-container">
+                            <table >
+                              <tr>
+                                <th colspan="3">Transaction Type: Income</th>
+                              </tr>
+                              <tr>
+                                <th>Transc. Amt</th>
+                                <th>Transc. Head</th>
+                                <th>Transc. Date</th>
+                              </tr>
+                              <% for (var docx of docy.dailySend) { %>
+                                <%if(docx.transact_type==='income'){%>
+                                    <tr>
+                                      <td><%= docx.transact_amt %></td>
+                                      <td><%= docx.transact_head %></td>
+                                      <td><%= docx.timestamp %></td>
+                                    </tr>
+                                    <%}%>
+                              <% } %>
+                            </table>
+                          </div>
+                        
+                          <div class="right-table-container">
+                            <table >
+                              <tr>
+                                <th colspan="3">Transaction Type: Expense</th>
+                              </tr>
+                              <tr>
+                                <th>Transc. Amt</th>
+                                <th>Transc. Head</th>
+                                <th>Transc. Date</th>
+                              </tr>
+                              <% for (var docx of docy.dailySend) { %>
+                                <%if(docx.transact_type==='expense'){%>
+                                    <tr>
+                                      <td><%= docx.transact_amt %></td>
+                                      <td><%= docx.transact_head %></td>
+                                      <td><%= docx.timestamp %></td>
+                                    </tr>
+                                    <%}%>
+                              <% } %>
+                            </table>
+                          </div>
+                        </div>
                       <div class="openclose">
                         <h3>Closing Balance: $<%= docy.balance%></h3>
                     </div>
-                    <!-- <div style="clear: both;"></div> -->
+
                 </div>
                 
                 <div class="tab-content" id="content-weekly">
@@ -450,24 +456,53 @@
                   <div class="openclose">
                     <h3>Opening Balance: $<%= docy.openingBalWeek%></h3>
                 </div>
-                  <table>
 
-                    <tr>
-                        <th>Transc. Type</th>
-                        <th>Transc. Amt</th>
-                        <th>Transc. Head</th>
-                        <th>Transc. Date</th>
-                    </tr>
+                <div class="table-container">
+                    <div class="left-table-container">
+                        <table >
+                          <tr>
+                            <th colspan="3">Transaction Type: Income</th>
+                          </tr>
+                          <tr>
+                            <th>Transc. Amt</th>
+                            <th>Transc. Head</th>
+                            <th>Transc. Date</th>
+                          </tr>
+                          <% for (var docx of docy.weeklySend) { %>
+                            <%if(docx.transact_type==='income'){%>
+                                <tr>
+                                  <td><%= docx.transact_amt %></td>
+                                  <td><%= docx.transact_head %></td>
+                                  <td><%= docx.timestamp %></td>
+                                </tr>
+                                <%}%>
+                          <% } %>
+                        </table>
+                      </div>
                     
-                        <% for(var docx of docy.weeklySend) {%>
-                        <tr>
-                            <td><%= docx.transact_type %></td>
-                            <td><%= docx.transact_amt %></td>
-                            <td><%= docx.transact_head %></td>
-                            <td><%= docx.timestamp %></td>
-                        </tr>
-                        <% } %>
-                </table>
+                      <div class="right-table-container">
+                        <table >
+                          <tr>
+                            <th colspan="3">Transaction Type: Expense</th>
+                          </tr>
+                          <tr>
+                            <th>Transc. Amt</th>
+                            <th>Transc. Head</th>
+                            <th>Transc. Date</th>
+                          </tr>
+                          <% for (var docx of docy.weeklySend) { %>
+                            <%if(docx.transact_type==='expense'){%>
+                                <tr>
+                                  <td><%= docx.transact_amt %></td>
+                                  <td><%= docx.transact_head %></td>
+                                  <td><%= docx.timestamp %></td>
+                                </tr>
+                                <%}%>
+                          <% } %>
+                        </table>
+                      </div>
+                    </div>
+
 
                 <div class="openclose">
                     <h3>Closing Balance: $<%= docy.balance%></h3>
@@ -478,28 +513,55 @@
                   <!-- Content for the Monthly option goes here -->
                   <div class="openclose">
                     <h3>Opening Balance: $<%= docy.openingBalMonth%></h3>
+                </div>
+                <div class="table-container">
+                    <div class="left-table-container">
+                        <table >
+                          <tr>
+                            <th colspan="3">Transaction Type: Income</th>
+                          </tr>
+                          <tr>
+                            <th>Transc. Amt</th>
+                            <th>Transc. Head</th>
+                            <th>Transc. Date</th>
+                          </tr>
+                          <% for (var docx of docy.monthlySend) { %>
+                            <%if(docx.transact_type==='income'){%>
+                                <tr>
+                                  <td><%= docx.transact_amt %></td>
+                                  <td><%= docx.transact_head %></td>
+                                  <td><%= docx.timestamp %></td>
+                                </tr>
+                                <%}%>
+                          <% } %>
+                        </table>
+                      </div>
+                    
+                      <div class="right-table-container">
+                        <table >
+                          <tr>
+                            <th colspan="3">Transaction Type: Expense</th>
+                          </tr>
+                          <tr>
+                            <th>Transc. Amt</th>
+                            <th>Transc. Head</th>
+                            <th>Transc. Date</th>
+                          </tr>
+                          <% for (var docx of docy.monthlySend) { %>
+                            <%if(docx.transact_type==='expense'){%>
+                                <tr>
+                                  <td><%= docx.transact_amt %></td>
+                                  <td><%= docx.transact_head %></td>
+                                  <td><%= docx.timestamp %></td>
+                                </tr>
+                                <%}%>
+                          <% } %>
+                        </table>
+                      </div>
+                    </div>
+                <div class="openclose">
                     <h3>Closing Balance: $<%= docy.balance%></h3>
                 </div>
-                  <table>
-                    <tr>
-                        <th>Transc. Type</th>
-                        <th>Transc. Amt</th>
-                        <th>Transc. Head</th>
-                        <th>Transc. Date</th>
-                    </tr>
-                    
-                        <% for(var docx of docy.monthlySend) {%>
-                        <tr>
-                            <td><%= docx.transact_type %></td>
-                            <td><%= docx.transact_amt %></td>
-                            <td><%= docx.transact_head %></td>
-                            <td><%= docx.timestamp %></td>
-                        </tr>
-                        <% } %>
-                    
-
-
-                </table>
                 </div>
                 
                 
@@ -507,34 +569,62 @@
                 <div class="tab-content" id="content-annually">
                     <div class="openclose">
                         <h3>Opening Balance: $<%= docy.openingBalYear%></h3>
+                    </div>
+                    <div class="table-container">
+                        <div class="left-table-container">
+                            <table >
+                              <tr>
+                                <th colspan="3">Transaction Type: Income</th>
+                              </tr>
+                              <tr>
+                                <th>Transc. Amt</th>
+                                <th>Transc. Head</th>
+                                <th>Transc. Date</th>
+                              </tr>
+                              <% for (var docx of docy.yearlySend) { %>
+                                <%if(docx.transact_type==='income'){%>
+                                    <tr>
+                                      <td><%= docx.transact_amt %></td>
+                                      <td><%= docx.transact_head %></td>
+                                      <td><%= docx.timestamp %></td>
+                                    </tr>
+                                    <%}%>
+                              <% } %>
+                            </table>
+                          </div>
+                        
+                          <div class="right-table-container">
+                            <table >
+                              <tr>
+                                <th colspan="3">Transaction Type: Expense</th>
+                              </tr>
+                              <tr>
+                                <th>Transc. Amt</th>
+                                <th>Transc. Head</th>
+                                <th>Transc. Date</th>
+                              </tr>
+                              <% for (var docx of docy.yearlySend) { %>
+                                <%if(docx.transact_type==='expense'){%>
+                                    <tr>
+                                      <td><%= docx.transact_amt %></td>
+                                      <td><%= docx.transact_head %></td>
+                                      <td><%= docx.timestamp %></td>
+                                    </tr>
+                                    <%}%>
+                              <% } %>
+                            </table>
+                          </div>
+                        </div>
+                    <div class="openclose">
                         <h3>Closing Balance: $<%= docy.balance%></h3>
                     </div>
-                    <table>
-                        <tr>
-                            <th>Transc. Type</th>
-                            <th>Transc. Amt</th>
-                            <th>Transc. Head</th>
-                            <th>Transc. Date</th>
-                        </tr>
-                        
-                            <% for(var docx of docy.yearlySend) {%>
-                            <tr>
-                                <td><%= docx.transact_type %></td>
-                                <td><%= docx.transact_amt %></td>
-                                <td><%= docx.transact_head %></td>
-                                <td><%= docx.timestamp %></td>
-                            </tr>
-                            <% } %>
-                        
-
-
-                    </table>
                 </div>
               </div>
-              
         </div>
     </div>
 
+
     
+
 </body>
 </html>
