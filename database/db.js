@@ -5,7 +5,7 @@ const connectDB = async () =>
 {
     try {
         mongoose.set('strictQuery',true);
-        await mongoose.connect(process.env.DB,
+        await mongoose.connect("mongodb+srv://admin:user@main.3nzia0v.mongodb.net/?retryWrites=true&w=majority",
             {
                 useNewUrlParser: true,
             });
