@@ -36,7 +36,4 @@ the application is divided into three segments i.e
 ![image](https://github.com/gnaaruag/petty-cash-book/assets/68043860/84c88369-4ae3-47cb-bce4-49fb1496c02c)
 
 
-deployed on [Render](https://petty-cash-app.onrender.com)
 
-
-**note - the server instance will take a few seconds to load up as the instance is only run when requested** 
