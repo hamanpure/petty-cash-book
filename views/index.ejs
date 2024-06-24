@@ -1,101 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Findone</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            margin: 0;
-            background-color: rgba(128, 128, 128, 0.023);
-            background-image: url('/images/bmqq15.jpg');
-            background-position: 0;
-        }
+      body {
+        margin: 0;
+        background-color: rgba(128, 128, 128, 0.023);
+        background-image: url("/images/bmqq15.jpg");
+        background-position: 0;
+      }
+      .image {
+        width: 100%;
+        height: 100%;
+      }
+      /* nav bar */
+      .header {
+        border-bottom: 1px solid #e2e8f0;
+      }
 
-        .nav-content {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background-color: rgba(245, 245, 245, 0.934);
+        
+      }
+      .hamburger {
+        display: none;
+      }
+
+      .bar {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        background-color: #101010;
+      }
+      .nav-menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-item {
+        margin-left: 5rem;
+      }
+
+      .nav-link {
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: #475569;
+      }
+
+      .nav-link:hover {
+        color: #482ff7;
+      }
+      ul{
             list-style: none;
-            font-family: 'Inter', sans-serif;
-            font-weight: 700;
-            color: #6c63ff;
-            font-size: 1.5em;
-            background-color: rgba(128, 128, 128, 0.116);
-            margin: 0;
-            padding: 1em 0;
+            font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 1.5rem;
+
         }
 
-        .nav-land {
-            border-radius: 0.5em;
-        }
-
-        a {
-            text-decoration: none;
-            color: #6c63ff;
-        }
-
-        a:hover {
-            color: #6b63ff95;
-        }
-
+      @media only screen and (max-width: 768px) {
         .main {
-            display: flex;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+      }
+        .nav-menu {
+          position: fixed;
+          left: -100%;
+          top: 5rem;
+          flex-direction: column;
+          background-color: #fff;
+          width: 100%;
+          border-radius: 10px;
+          text-align: center;
+          transition: 0.3s;
+          box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        }
+       
+        .nav-menu.active {
+          left: 0;
         }
 
-        .content1 {
-            margin: 1em ;
-            font-size: 3em;
-            padding-left: 2em;
-            padding-top: 2em;
-            align-content: center;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
+        .nav-item {
+          margin: 2rem 0;
         }
 
-        p {
-            font-size: 0.4em;
-            font-weight: 400;
+        .hamburger {
+          display: block;
+          cursor: pointer;
+        }
+        .hamburger.active .bar:nth-child(2) {
+          opacity: 0;
         }
 
-        .main {
-            margin-top: 2em;
+        .hamburger.active .bar:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
         }
 
-        span {
-            color: #6c63ff;
+        .hamburger.active .bar:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
         }
+      }
 
-        .content2 {
-            padding: 2em;
-            margin: 1em 5em;
-        }
+      a {
+        text-decoration: none;
+        color: #6c63ff;
+      }
+
+      a:hover {
+        color: #6b63ff95;
+      }
+
+      .main {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .content1 {
+        margin: 1em;
+        font-size: 3em;
+        align-content: center;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 0.4em;
+        font-weight: 400;
+      }
+
+      .main {
+        margin-top: 2em;
+      }
+
+      span {
+        color: #6c63ff;
+      }
+
+      .content2 {
+        padding: 2em;
+        margin: 1em 5em;
+      }
     </style>
-</head>
-<body>
-    <nav class="nav-land">
-        <ul class="nav-content">
-            <li><a href="/"><i class="fa-solid fa-money-check-dollar fa-3x" style="color: #6c63ff;"></i></a></li>
-            <li><a href="/my-ledger">My Ledger</a></li>
-            <li><a href="/analytics">Analytics</a></li>
-            <li><a href="/create-head">Create Head</a></li>
-
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <a href="/"
+          ><i
+            class="fa-solid fa-money-check-dollar fa-3x"
+            style="color: #6c63ff"
+          ></i
+        ></a>
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="/my-ledger">My Ledger</a></li>
+          <li class="nav-item"><a href="/analytics">Analytics</a></li>
+          <li class="nav-item"><a href="/create-head">Create Head</a></li>
         </ul>
-    </nav>
-
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
+    </header>
     <div class="main">
-        <div class="content1">
-            Personal finance made <span><i>simpler</i></span>
+      <div class="content1">
+        Personal finance made <span><i>simpler</i></span>
 
-            <p>With <span><em>Findone</em></span> you can manage your finances within clicks</p>
-        </div>
-        <div class="content2">
-            <img src="/images/fin.png" alt="" style="width:100%; height:100%;">
-        </div>
+        <p>
+          With <span><em>Findone</em></span> you can manage your finances within
+          clicks
+        </p>
+      </div>
+      <!-- <div class="content2">
+        <img class = "image"src="/images/fin.png" alt=""">
+      </div> -->
     </div>
-</body>
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+
+      hamburger.addEventListener("click", mobileMenu);
+
+      function mobileMenu() {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      }
+      const navLink = document.querySelectorAll(".nav-link");
+
+      navLink.forEach((n) => n.addEventListener("click", closeMenu));
+
+      function closeMenu() {
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+      }
+    </script>
+  </body>
 </html>
